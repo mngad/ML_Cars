@@ -1,0 +1,124 @@
+{
+  "name": "root",
+  "total": 16.486258999999997,
+  "count": 1,
+  "self": 6.5473484000000255,
+  "children": [
+    {
+      "name": "TrainerController.advance",
+      "total": 9.938910599999971,
+      "count": 866,
+      "self": 0.009020199999957512,
+      "children": [
+        {
+          "name": "env_step",
+          "total": 9.541125800000012,
+          "count": 866,
+          "self": 9.005413900000011,
+          "children": [
+            {
+              "name": "SubprocessEnvManager._take_step",
+              "total": 0.5282996000000466,
+              "count": 866,
+              "self": 0.024460100000062823,
+              "children": [
+                {
+                  "name": "PPOPolicy.evaluate",
+                  "total": 0.5038394999999838,
+                  "count": 866,
+                  "self": 0.5038394999999838
+                }
+              ]
+            },
+            {
+              "name": "workers",
+              "total": 0.007412299999954186,
+              "count": 865,
+              "self": 0.0,
+              "children": [
+                {
+                  "name": "worker_root",
+                  "total": 15.742844099999992,
+                  "count": 865,
+                  "is_parallel": true,
+                  "self": 7.3098849,
+                  "children": [
+                    {
+                      "name": "batched_step_result_from_proto",
+                      "total": 0.002720100000000336,
+                      "count": 1,
+                      "is_parallel": true,
+                      "self": 9.300000000056485e-05,
+                      "children": [
+                        {
+                          "name": "_process_vector_observation",
+                          "total": 0.0026270999999997713,
+                          "count": 1,
+                          "is_parallel": true,
+                          "self": 0.0026270999999997713
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UnityEnvironment.step",
+                      "total": 8.430239099999993,
+                      "count": 865,
+                      "is_parallel": true,
+                      "self": 0.0689696999999736,
+                      "children": [
+                        {
+                          "name": "UnityEnvironment._generate_step_input",
+                          "total": 0.08184789999998987,
+                          "count": 865,
+                          "is_parallel": true,
+                          "self": 0.08184789999998987
+                        },
+                        {
+                          "name": "communicator.exchange",
+                          "total": 8.118423400000035,
+                          "count": 865,
+                          "is_parallel": true,
+                          "self": 8.118423400000035
+                        },
+                        {
+                          "name": "batched_step_result_from_proto",
+                          "total": 0.16099809999999248,
+                          "count": 865,
+                          "is_parallel": true,
+                          "self": 0.041936499999986054,
+                          "children": [
+                            {
+                              "name": "_process_vector_observation",
+                              "total": 0.11906160000000643,
+                              "count": 865,
+                              "is_parallel": true,
+                              "self": 0.11906160000000643
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "trainer_advance",
+          "total": 0.3887646000000018,
+          "count": 865,
+          "self": 0.02215959999996997,
+          "children": [
+            {
+              "name": "process_trajectory",
+              "total": 0.3666050000000318,
+              "count": 865,
+              "self": 0.3666050000000318
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
