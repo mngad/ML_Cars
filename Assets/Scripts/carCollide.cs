@@ -13,6 +13,7 @@ public class carCollide : MonoBehaviour
     public bool checkpoint = false;
     public bool finish = false;
     public bool track = false;
+    public bool fence = false;
     // Update is called once per frame
     void Update()
     {
@@ -23,6 +24,12 @@ public class carCollide : MonoBehaviour
 
         
       
+            if (collision.gameObject.tag == "fence")
+            {
+                // SetReward(2f);
+                Debug.Log("fence (trigger)");
+                fence = true;
+            }
             if (collision.gameObject.tag == "checkpoint")
             {
                 // SetReward(2f);
@@ -51,11 +58,18 @@ public class carCollide : MonoBehaviour
 
 
 
+        if (collision.gameObject.tag == "fence")
+            {
+                // SetReward(2f);
+                Debug.Log("fence collision");
+                fence = true;
+            }
+
         if (collision.gameObject.tag == "checkpoint")
         {
             // SetReward(2f);
-            Debug.Log("Checkpoint (trigger)");
-            checkpoint = true;
+            Debug.Log("Checkpoint (collision)");
+           // checkpoint = true;
         }
         if (collision.gameObject.tag == "finish")
         {
@@ -69,7 +83,7 @@ public class carCollide : MonoBehaviour
         {
             track = true;
             //SetReward(-1f);
-            //Debug.Log("hit track (trigger)");
+            Debug.Log("hit track (trigger)");
             // Done();
         }
 

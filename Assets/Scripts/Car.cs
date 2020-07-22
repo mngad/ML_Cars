@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 using UnityEditor;
 using System.IO;
-using MLAgents;
-
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -17,7 +17,7 @@ namespace UnityStandardAssets.Vehicles.Car
         public GameObject thecar;
       
 
-        IFloatProperties m_ResetParams;
+        //IFloatProperties m_ResetParams;
         
         public GameObject Holder;
         public Quaternion initRot;
@@ -37,7 +37,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private float speedSum = 0;
         private void Awake()
         {
-            
+           Application.targetFrameRate = 300; 
             // get the car controller
             m_Car = GetComponent<CarController>();
             //Debug.Log("awake");
@@ -49,14 +49,14 @@ namespace UnityStandardAssets.Vehicles.Car
 
             time += Time.deltaTime;
             carCollide cc = thecar.GetComponent<carCollide>();
-            if (cc.track)
-            {
-                //Debug.Log("hit track (trigger)");
-                //Debug.Log(thecar);
+
+        
+            if (cc.fence){
+            
                 SetReward(-2f);
                 points -= 1f;
-                cc.track = false;
-                Done();
+                cc.fence = false;
+                EndEpisode();
                 //Debug.Log("track");
 
             }
@@ -75,7 +75,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     }
                     SetReward(2f);
                     points += 2f;
-                    Done();
+                    EndEpisode();
                    
                 
             }
@@ -89,7 +89,7 @@ namespace UnityStandardAssets.Vehicles.Car
             }
 
         }
-        public override void InitializeAgent()
+        public override void Initialize()
         {
 
             
@@ -97,16 +97,17 @@ namespace UnityStandardAssets.Vehicles.Car
             initPos = thecar.transform.position;
             //Debug.Log("InitPos = " + initPos);
 
-            m_ResetParams = Academy.Instance.FloatProperties;
+            //m_ResetParams = Academy.Instance.FloatProperties;
             //SetResetParameters();
 
         }
 
-        public override void AgentAction(float[] vectorAction)
+        public override void OnActionReceived(float[] vectorAction)
         {
-            actionX = 1f * Mathf.Clamp(vectorAction[0], -1f, 1f);
-            actionY = 1f * Mathf.Clamp(vectorAction[1], 0f, 1f);
-            actionZ= 1f * Mathf.Clamp(vectorAction[2], 0f, 1f);
+            actionX = 1f * Mathf.Clamp(vectorAction[0], -1f, 1f); //steer
+            actionY = 10f * Mathf.Clamp(vectorAction[1], 0f, 1f); // accel
+            actionZ = 0f;
+            //actionZ= 1f * Mathf.Clamp(vectorAction[2], 0f, 1f);
             /*Debug.Log(actionX);
             Debug.Log(actionY);
             m_Car.Move(actionX, actionY, actionY, 0f);*/
@@ -124,7 +125,7 @@ namespace UnityStandardAssets.Vehicles.Car
             if (thecar.GetComponent<Rigidbody>().velocity.magnitude <= 0.2 && checkpointsHit > 0 )
             {
                 SetReward(-0.5f);
-                Done();
+                EndEpisode();
                 
             }
             if (thecar.GetComponent<Rigidbody>().velocity.magnitude >=1)
@@ -138,7 +139,7 @@ namespace UnityStandardAssets.Vehicles.Car
         }
 
  
-    public override void CollectObservations()
+    public override void CollectObservations(VectorSensor sensor)
         {
 
 
@@ -204,16 +205,16 @@ namespace UnityStandardAssets.Vehicles.Car
                 if (Physics.Raycast(thecar.transform.position + offset, directions[i], out hits[i], sensorLength, layerMask))
                 {
                     Debug.DrawRay(thecar.transform.position + offset, directions[i] * hits[i].distance, Color.yellow);
-                    AddVectorObs(hits[i].distance);
+                    sensor.AddObservation(hits[i].distance);
                     //Debug.DrawRay(thecar.transform.position , sDir * shit.distance, Color.green);
                    //Debug.Log(hits[i].distance);
                 }
                 else
                 {
-                    AddVectorObs(0f);
+                    sensor.AddObservation(0f);
                 }
             }
-            AddVectorObs(thecar.GetComponent<Rigidbody>().velocity.magnitude);
+            sensor.AddObservation(thecar.GetComponent<Rigidbody>().velocity.magnitude);
 
 
 
@@ -224,7 +225,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
 
 
-        public override void AgentReset()
+        public override void OnEpisodeBegin()
         {
 
            
@@ -244,7 +245,7 @@ namespace UnityStandardAssets.Vehicles.Car
             //Reset the parameters when the Agent is reset.
             //SetResetParameters();
         }
-
+/*
         public override float[] Heuristic()
         {
             var action = new float[2];
@@ -253,7 +254,7 @@ namespace UnityStandardAssets.Vehicles.Car
             action[1] = Input.GetAxis("Vertical");
             return action;
         }
-
+*/
 
     }
 

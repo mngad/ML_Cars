@@ -7,6 +7,7 @@ TagManager:
   - track
   - checkpoint
   - finish
+  - fence
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,41 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1595430633",
+        "python_version": "3.7.8 (default, Jul 19 2020, 19:19:40) \n[GCC 10.1.0]",
+        "command_line_arguments": "/home/fraun/.local/bin//mlagents-learn trainer_config.yaml --run-id=car_env --resume",
+        "mlagents_version": "0.18.0",
+        "mlagents_envs_version": "0.18.0",
+        "communication_protocol_version": "1.0.0",
+        "tensorflow_version": "2.2.0",
+        "end_time_seconds": "1595430646"
+    },
+    "total": 13.159625860993401,
+    "count": 1,
+    "self": 0.008007631986401975,
+    "children": {
+        "run_training.setup": {
+            "total": 0.0049133209977298975,
+            "count": 1,
+            "self": 0.0049133209977298975
+        },
+        "TrainerController.start_learning": {
+            "total": 13.14670490800927,
+            "count": 1,
+            "self": 0.6907985810248647,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 12.455815676992643,
+                    "count": 1,
+                    "self": 12.455815676992643
+                },
+                "TrainerController._save_model": {
+                    "total": 9.064999176189303e-05,
+                    "count": 1,
+                    "self": 9.064999176189303e-05
+                }
+            }
+        }
+    }
+}
